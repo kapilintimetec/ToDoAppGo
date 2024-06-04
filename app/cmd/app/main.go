@@ -3,32 +3,31 @@ package main
 import (
 	"ToDoAppGo/app/api"
 	"ToDoAppGo/app/config"
+	"ToDoAppGo/app/internal/db"
 	"github.com/labstack/echo/v4"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"log"
 )
 
 func main() {
+	log.Print("Loading config")
+	cfg, err := config.GetConfig()
+	if err != nil {
+		log.Fatalf("Error loading config: %v", err)
+	}
+	log.Print("Config loaded")
 	e := echo.New()
+
+	log.Print("Connecting to database")
+	_, err = db.GetInstance(cfg)
+	if err != nil {
+		log.Fatal(err)
+
+	}
+	log.Print("Database connected")
 
 	log.Print("Initializing routes")
 	api.InitRoutes(e)
 
-	log.Print("Reading config")
-	config.InitConfig()
-
-	log.Print("Connecting to database")
-
-	dsn := "host=db user=user password=password dbname=todoapp port=5432 sslmode=disable TimeZone=Asia/Shanghai"
-	_, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Panic(err)
-	}
-
 	log.Print("Starting server")
-
-	if err := e.Start(":8080"); err != nil {
-		e.Logger.Fatal(err)
-	}
+	e.Logger.Fatal(e.Start(":8080"))
 }

@@ -1,33 +1,47 @@
 package config
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	DbHost string `mapstructure:"DB_HOST"`
-	DbPort string `mapstructure:"DB_PORT"`
-	DbUser string `mapstructure:"DB_USER"`
-	DbPass string `mapstructure:"DB_PASSWORD"`
-	DbName string `mapstructure:"DB_NAME"`
-	DbURL  string
+	DbHost     string
+	DbPort     string
+	DbUser     string
+	DbPassword string
+	DbName     string
 }
 
-var AppConfig Config
+var config *Config
 
-func InitConfig() {
+func GetConfig() (*Config, error) {
+	if config == nil {
+		err := initConfig()
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return config, nil
+}
+
+func initConfig() error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("json")
 	viper.AddConfigPath(".")
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		panic(fmt.Errorf("fatal error config file: %s", err))
+		return err
 	}
 
-	err = viper.Unmarshal(&AppConfig)
-	if err != nil {
-		panic(fmt.Errorf("unable to decode config into struct: %s", err))
+	config = &Config{
+		DbHost:     viper.GetString("DB_HOST"),
+		DbPort:     viper.GetString("DB_PORT"),
+		DbUser:     viper.GetString("DB_USER"),
+		DbPassword: viper.GetString("DB_PASSWORD"),
+		DbName:     viper.GetString("DB_NAME"),
 	}
+
+	return nil
 }
