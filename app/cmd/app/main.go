@@ -10,15 +10,16 @@ import (
 
 func main() {
 	log.Print("Loading config")
-	cfg, err := config.GetConfig()
+	_, err := config.GetConfig()
 	if err != nil {
 		log.Fatalf("Error loading config: %v", err)
 	}
 	log.Print("Config loaded")
+
 	e := echo.New()
 
 	log.Print("Connecting to database")
-	_, err = db.GetInstance(cfg)
+	_, err = db.GetInstance()
 	if err != nil {
 		log.Fatal(err)
 
