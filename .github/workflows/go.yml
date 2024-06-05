@@ -1,0 +1,48 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+        
+    - name: Restore cache
+      id: yocto-cache-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: cache
+        key: yocto-cache-latest
+    
+    - name: Install build prerequisites
+      run: |
+        sudo apt install bash build-essential chrpath cpio curl diffstat gawk rsync wget xz-utils
+        sudo apt install python3-pip python3-pexpect
+        sudo apt install libsdl2-dev
+        sudo apt install repo
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Test
+      run: go test -v ./...
+      
+    - uses: actions/cache/save@v3
+      id: cache
+      with:
+        path: path/to/dependencies
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
