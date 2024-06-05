@@ -38,7 +38,7 @@ jobs:
     - name: Build
       run: |
         ${{ github.workspace }}
-        go build -v app/cmd/app/main.go
+        go build -v ./app/cmd/app/main.go
       
     - uses: actions/cache/save@v3
       id: cache
