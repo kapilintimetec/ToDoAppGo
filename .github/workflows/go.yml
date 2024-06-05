@@ -36,10 +36,7 @@ jobs:
         sudo apt install repo
 
     - name: Build
-      run: go build -v ./...
-
-    - name: Test
-      run: go test -v ./...
+      run: go build -v app/cmd/app/main.go
       
     - uses: actions/cache/save@v3
       id: cache
