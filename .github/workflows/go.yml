@@ -37,7 +37,7 @@ jobs:
 
     - name: Build
       run: |
-        echo $pwd
+        ${{ github.workspace }}
         go build -v app/cmd/app/main.go
       
     - uses: actions/cache/save@v3
