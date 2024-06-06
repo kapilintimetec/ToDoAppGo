@@ -37,8 +37,8 @@ jobs:
 
     - name: Build
       run: |
-        cd app/cmd/app/
-        go build -v main.go
+        go build -v app/cmd/app/main.go
+        ls
       
     - uses: actions/cache/save@v3
       id: cache
