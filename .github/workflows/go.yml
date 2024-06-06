@@ -27,6 +27,14 @@ jobs:
       with:
         path: vendor
         key: yocto-cache-latest
+
+    - name: Restore broken cache
+      if: steps.yocto-cache-restore.outputs.cache-hit != 'true'
+      id: yocto-broken-cache-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: vendor
+        key: yocto-broken-cache-latest
     
     - name: Install build prerequisites
       if: steps.yocto-cache-restore.outputs.cache-hit != 'true'
@@ -45,4 +53,12 @@ jobs:
       with:
         path: vendor
         key: yocto-cache-latest
+
+    - name: Save Broken cache
+      if: steps.yocto-cache-save.outputs.cache-hit != 'true'
+      id: yocto-broken-cache-save
+      uses: actions/cache/save@v4
+      with:
+        path: vendor
+        key: yocto-broken-cache-latest
 
