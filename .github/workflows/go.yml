@@ -37,6 +37,7 @@ jobs:
 
     - name: Build
       run: |
+        go get "github.com/labstack/echo/v4" 
         go build -v app/cmd/app/main.go
         ls
       
