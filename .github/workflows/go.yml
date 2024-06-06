@@ -31,17 +31,12 @@ jobs:
     - name: Install build prerequisites
       if: steps.yocto-cache-latest.outputs.cache-hit != 'true'
       run: |
-        sudo apt install bash build-essential chrpath cpio curl diffstat gawk rsync wget xz-utils
-        sudo apt install python3-pip python3-pexpect
-        sudo apt install libsdl2-dev
-        sudo apt install repo
+        go mod vendor
 
     - name: Build
       run: |
-        go mod vendor
         go get "github.com/labstack/echo/v4" 
         go build -v app/cmd/app/main.go
-        ls
       
     - name: Save cache
       id: yocto-cache-save
