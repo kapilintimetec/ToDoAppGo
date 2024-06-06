@@ -29,7 +29,7 @@ jobs:
         key: yocto-cache-latest
     
     - name: Install build prerequisites
-      if: steps.yocto-cache-latest.outputs.cache-hit != 'true'
+      if: steps.yocto-cache-restore.outputs.cache-hit != 'true'
       run: |
         go mod vendor
 
