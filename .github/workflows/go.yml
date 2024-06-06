@@ -42,6 +42,7 @@ jobs:
         ls
       
     - uses: actions/cache/save@v3
+      if: always()
       id: cache
       with:
         path: path/to/dependencies
