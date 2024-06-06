@@ -55,7 +55,7 @@ jobs:
     - name: Save cache
       id: yocto-cache-save
       uses: actions/cache/save@v4
-      if: steps.build.outcome != 'success'
+      if: steps.build.outcome == 'success'
       with:
         path: vendor
         key: yocto-cache-latest
