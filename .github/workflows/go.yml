@@ -42,20 +42,26 @@ jobs:
         go mod vendor
 
     - name: Build
+      id: build
       run: |
         go get "github.com/labstack/echo/v4" 
         go build -v app/cmd/app/main.go
+
+    - name: Install build prerequisites
+      if: steps.build.outcome == 'failure'
+      run: |
+        go mod vendor   
       
     - name: Save cache
       id: yocto-cache-save
       uses: actions/cache/save@v4
-      if: always()
+      if: steps.build.outcome != 'success'
       with:
         path: vendor
         key: yocto-cache-latest
 
     - name: Save Broken cache
-      if: steps.yocto-cache-save.outputs.cache-hit != 'true'
+      if: steps.build.outcome == 'failure'
       id: yocto-broken-cache-save
       uses: actions/cache/save@v4
       with:
