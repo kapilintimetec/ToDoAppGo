@@ -28,12 +28,12 @@ jobs:
         path: cache
         key: yocto-cache-latest
     
-    # - name: Install build prerequisites
-    #   run: |
-    #     sudo apt install bash build-essential chrpath cpio curl diffstat gawk rsync wget xz-utils
-    #     sudo apt install python3-pip python3-pexpect
-    #     sudo apt install libsdl2-dev
-    #     sudo apt install repo
+    - name: Install build prerequisites
+      run: |
+        sudo apt install bash build-essential chrpath cpio curl diffstat gawk rsync wget xz-utils
+        sudo apt install python3-pip python3-pexpect
+        sudo apt install libsdl2-dev
+        sudo apt install repo
 
     - name: Build
       run: |
