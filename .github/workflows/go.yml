@@ -37,7 +37,6 @@ jobs:
 
     - name: Build
       run: |
-        ${{ github.workspace }}
         cd /app/cmd/app/
         $PWD
         go build -v main.go
