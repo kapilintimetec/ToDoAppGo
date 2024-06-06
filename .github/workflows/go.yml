@@ -19,7 +19,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '1.20'
+        go-version: '1.22'
         
     - name: Restore cache
       id: yocto-cache-restore
@@ -47,4 +47,4 @@ jobs:
       with:
         path: path/to/dependencies
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-        upload-chunk-size: 2000000
+        # upload-chunk-size: 2000000
