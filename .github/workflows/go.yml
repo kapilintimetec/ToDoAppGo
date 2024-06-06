@@ -29,8 +29,8 @@ jobs:
         key: yocto-cache-latest
     
     - name: Install build prerequisites
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
-        if: steps.cache.outputs.cache-hit != 'true'
         sudo apt install bash build-essential chrpath cpio curl diffstat gawk rsync wget xz-utils
         sudo apt install python3-pip python3-pexpect
         sudo apt install libsdl2-dev
