@@ -41,10 +41,9 @@ jobs:
         go build -v app/cmd/app/main.go
         ls
       
-    - uses: actions/cache/save@v3
-      if: always()
-      id: cache
+    - name: Save cache
+      id: yocto-cache-save
+      uses: actions/cache/save@v4
       with:
-        path: path/to/dependencies
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-        # upload-chunk-size: 2000000
+        path: cache
+        key: yocto-cache-latest
