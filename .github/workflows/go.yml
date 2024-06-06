@@ -44,6 +44,7 @@ jobs:
     - name: Save cache
       id: yocto-cache-save
       uses: actions/cache/save@v4
+      if: always()
       with:
         path: cache
         key: yocto-cache-latest
