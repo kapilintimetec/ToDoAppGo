@@ -8,6 +8,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: "0 * * * *" 
 
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
