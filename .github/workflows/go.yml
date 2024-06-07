@@ -56,14 +56,17 @@ jobs:
     - name: Delete Previous Cache
       if: steps.build.outcome == 'success'
       run: |
+        GH_TOKEN: ${{ github.token }}
         gh extension install actions/gh-actions-cache
         gh actions-cache delete yocto-cache-latest --confirm
 
     # overwrite Broken cache key: delete previous and save current
     - name: Delete Previous Broken Cache
       if: steps.build.outcome == 'failure'
+      
       continue-on-error: true
       run: |
+        GH_TOKEN: ${{ github.token }}
         gh extension install actions/gh-actions-cache
         gh actions-cache delete yocto-cache-latest --confirm
           
