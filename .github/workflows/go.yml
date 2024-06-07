@@ -51,7 +51,22 @@ jobs:
       if: steps.build.outcome == 'failure'
       run: |
         go mod vendor   
-      
+
+    # overwrite cache key: delete previous and save current
+    - name: Delete Previous Cache
+      if: steps.build.outcome == 'success'
+      run: |
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete yocto-cache-latest --confirm
+
+    # overwrite Broken cache key: delete previous and save current
+    - name: Delete Previous Broken Cache
+      if: steps.build.outcome == 'failure'
+      continue-on-error: true
+      run: |
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete yocto-cache-latest --confirm
+          
     - name: Save cache
       id: yocto-cache-save
       uses: actions/cache/save@v4
